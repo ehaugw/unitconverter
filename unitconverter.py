@@ -14,7 +14,7 @@ prefixes = {
     "m":    1e-3
 }
 
-text_to_convert = "The baby was 50.1cm tall and weighted 3.5kg at birth. The mother was 1.71m and 71.22kg before birth and 67.72kg after birth."
+text_to_convert = "The baby was 59.1cm tall and weighted 3.5kg at birth. The mother was 1.71m and 71.22kg before birth and 67.72kg after birth."
 
 def convert_text(text):
     old_text = ""
@@ -27,15 +27,18 @@ def convert_text(text):
 
             prefix = 1 if groups[2] is None else prefixes[groups[2]]
             unit_info = si_to_imp[groups[3]]
-            scalar = float(groups[0]) * prefix * unit_info[1]
 
-            new_str = "%.2f%s" % (scalar, unit_info[0])
+            scalar = float(groups[0]) * prefix * unit_info[1]
+            
+            if unit_info[0] != "ft":
+                new_str = "%.2f%s" % (scalar, unit_info[0])
+            else:
+                new_str = "%.0f'%.0f\"" % (int(scalar), (scalar - int(scalar)) * 12)
 
             text = text.replace("%s%s" % (groups[0], groups[1]), new_str)
 
     return text
 
 if __name__ == "__main__":
-    assert convert_text(text_to_convert) == "The baby was 1.64ft tall and weighted 7.72lbs at birth. The mother was 5.61ft and 157.01lbs before birth and 149.30lbs after birth."
-
+    assert convert_text(text_to_convert) == "The baby was 1'11\" tall and weighted 7.72lbs at birth. The mother was 5'7\" and 157.01lbs before birth and 149.30lbs after birth."
 
