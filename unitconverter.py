@@ -10,3 +10,8 @@ prefixes = {
     "c":    1e-2
     "m":    1e-3
 }
+
+text_to_convert = """
+The baby was 50.1cm tall and weighted 3.5kg at birth.
+"""
+
