@@ -2,8 +2,8 @@ import re
 
 
 si_to_imp = {
-    "m":    ("ft",  3),
-    "g":    ("lbs", 1/450)
+    "m":    ("ft",  3.28084),
+    "g":    ("lbs", 0.00220462)
 }
 
 prefixes = {
@@ -25,8 +25,6 @@ def convert_text(text):
         if match:
             groups = match.groups()
 
-            print(groups)
-
             prefix = 1 if groups[2] is None else prefixes[groups[2]]
             unit_info = si_to_imp[groups[3]]
             scalar = float(groups[0]) * prefix * unit_info[1]
@@ -36,5 +34,6 @@ def convert_text(text):
     return text
 
 if __name__ == "__main__":
-    print(convert_text(text_to_convert))
+    assert convert_text(text_to_convert) == "The baby was 1.64ft tall and weighted 7.72lbs at birth. The mother was 5.61ft and 157.01lbs before birth and 149.30lbs after birth."
+
 
