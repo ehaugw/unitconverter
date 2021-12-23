@@ -29,7 +29,9 @@ def convert_text(text):
             unit_info = si_to_imp[groups[3]]
             scalar = float(groups[0]) * prefix * unit_info[1]
 
-            text = text.replace("%s%s" % (groups[0], groups[1]), "%.2f%s" % (scalar, unit_info[0]))
+            new_str = "%.2f%s" % (scalar, unit_info[0])
+
+            text = text.replace("%s%s" % (groups[0], groups[1]), new_str)
 
     return text
 
