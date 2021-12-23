@@ -18,7 +18,7 @@ prefixes = {
 }
 
 # this is the string that is should be converted to use imperial units
-text_to_convert = "The baby was 59.1cm tall and weighted 4kg at birth. The mother was 1.71m and 71.22kg before birth and 67.22kg after birth."
+text_to_convert = "The baby was 591mm tall and weighted 4kg at birth. The mother was 1.71m and 71.22kg before birth and 67.22kg after birth."
 
 # the candidate must implement this function
 def convert_text(text):
@@ -33,12 +33,14 @@ def convert_text(text):
             prefix = 1 if groups[3] is None else prefixes[groups[3]]
             unit_info = si_to_imp[groups[4]]
 
+            # calculate the imperial unit scalar from metric
             scalar = float(groups[0]) * prefix * unit_info[1]
             
+            # use the 'x"y notation for length
             if unit_info[0] != "ft":
                 new_str = "%.2f%s" % (scalar, unit_info[0])
             else:
-                new_str = "%.0f'%.0f\"" % (int(scalar), (scalar - int(scalar)) * 12)
+                new_str = "'%.0f\"%.0f" % (int(scalar), (scalar - int(scalar)) * 12)
 
             text = text.replace("%s%s" % (groups[0], groups[2]), new_str)
 
@@ -46,6 +48,5 @@ def convert_text(text):
 
 
 if __name__ == "__main__":
-    #  assert convert_text(text_to_convert) == ""
-    print(convert_text(text_to_convert))
+    assert convert_text(text_to_convert) == "The baby was '1\"11 tall and weighted 8.82lbs at birth. The mother was '5\"7 and 157.01lbs before birth and 148.19lbs after birth."
 
