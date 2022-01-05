@@ -40,7 +40,7 @@ def convert_text(text):
             if unit_info[0] != "ft":
                 new_str = "%.2f%s" % (scalar, unit_info[0])
             else:
-                new_str = "'%.0f\"%.0f" % (int(scalar), (scalar - int(scalar)) * 12)
+                new_str = "%.0f'%.0f\"" % (int(scalar), (scalar - int(scalar)) * 12)
 
             text = text.replace("%s%s" % (groups[0], groups[2]), new_str)
 
@@ -48,5 +48,5 @@ def convert_text(text):
 
 
 if __name__ == "__main__":
-    assert convert_text(text_to_convert) == "The baby was '1\"11 tall and weighted 8.82lbs at birth. The mother was '5\"7 and 157.01lbs before birth and 148.19lbs after birth."
+    assert convert_text(text_to_convert) == "The baby was 1'11\" tall and weighted 8.82lbs at birth. The mother was 5'7\" and 157.01lbs before birth and 148.19lbs after birth."
 
